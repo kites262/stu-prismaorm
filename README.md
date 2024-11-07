@@ -8,8 +8,7 @@ nvm use 18
 
 npm install prisma --save-dev
 npm install @prisma/client
-npm install pg
-s
+
 npx prisma init
 
 # Define models in schema.prisma, then

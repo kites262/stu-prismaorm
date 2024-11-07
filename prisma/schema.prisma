@@ -18,4 +18,13 @@ model User {
   name      String
   email     String   @unique
   createdAt DateTime @default(now())
+  posts     Post[]
+}
+
+// 帖子模型，包含标题和作者，和User是一对多的关系
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  author    User     @relation(fields: [authorId], references: [id]) //外键authorId，关联User模型的id
+  authorId  Int
 }
