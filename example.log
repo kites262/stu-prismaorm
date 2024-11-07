@@ -1,0 +1,148 @@
+C:\home\scoop\apps\nvm\current\nodejs\nodejs\node.exe W:\stu\js\try-prisma\index.js
+Resetting database...
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": PostgreSQL database "xxx", schema "public" at "xxx"
+
+Applying migration `20241107100137_init`
+
+Database reset successful
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20241107100137_init/
+    └─ migration.sql
+
+✔ Generated Prisma Client (v5.22.0) to .\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client in 35ms
+
+
+-----------------------------------
+Creating users
+-----------------------------------
+Created user: {
+  id: 1,
+  name: 'Kites',
+  email: 'i@kites.cc',
+  createdAt: 2024-11-07T10:33:42.870Z
+}
+Created user: {
+  id: 2,
+  name: 'Kites2',
+  email: 'i2@kites.cc',
+  createdAt: 2024-11-07T10:33:42.874Z
+}
+
+-----------------------------------
+Creating duplicate user
+-----------------------------------
+Error: Email already in use by another user.
+
+-----------------------------------
+Printing all users
+-----------------------------------
+All users: [
+  {
+    id: 1,
+    name: 'Kites',
+    email: 'i@kites.cc',
+    createdAt: 2024-11-07T10:33:42.870Z
+  },
+  {
+    id: 2,
+    name: 'Kites2',
+    email: 'i2@kites.cc',
+    createdAt: 2024-11-07T10:33:42.874Z
+  }
+]
+
+-----------------------------------
+Updating user
+-----------------------------------
+Updated user: {
+  id: 1,
+  name: 'Kites_Updated',
+  email: 'i@kites.cc',
+  createdAt: 2024-11-07T10:33:42.870Z
+}
+
+-----------------------------------
+Printing all users
+-----------------------------------
+All users: [
+  {
+    id: 2,
+    name: 'Kites2',
+    email: 'i2@kites.cc',
+    createdAt: 2024-11-07T10:33:42.874Z
+  },
+  {
+    id: 1,
+    name: 'Kites_Updated',
+    email: 'i@kites.cc',
+    createdAt: 2024-11-07T10:33:42.870Z
+  }
+]
+
+-----------------------------------
+Searching user by email
+-----------------------------------
+Searched user: {
+  id: 2,
+  name: 'Kites2',
+  email: 'i2@kites.cc',
+  createdAt: 2024-11-07T10:33:42.874Z
+}
+
+-----------------------------------
+Deleting user
+-----------------------------------
+Deleted user: {
+  id: 1,
+  name: 'Kites_Updated',
+  email: 'i@kites.cc',
+  createdAt: 2024-11-07T10:33:42.870Z
+}
+
+-----------------------------------
+Printing all users
+-----------------------------------
+All users: [
+  {
+    id: 2,
+    name: 'Kites2',
+    email: 'i2@kites.cc',
+    createdAt: 2024-11-07T10:33:42.874Z
+  }
+]
+
+-----------------------------------
+Creating posts
+-----------------------------------
+Created post: { id: 1, title: 'A Post', authorId: 2 }
+Created post: { id: 2, title: 'A Post', authorId: 2 }
+
+-----------------------------------
+Creating invalid post
+-----------------------------------
+Error: Invalid authorId. The specified user does not exist.
+
+-----------------------------------
+Printing all posts
+-----------------------------------
+All posts: [
+  { id: 1, title: 'A Post', authorId: 2 },
+  { id: 2, title: 'A Post', authorId: 2 }
+]
+
+-----------------------------------
+Searching post by title
+-----------------------------------
+Searched posts: [
+  { id: 1, title: 'A Post', authorId: 2 },
+  { id: 2, title: 'A Post', authorId: 2 }
+]
+
+Process finished with exit code 0
+
+

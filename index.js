@@ -2,8 +2,8 @@ const { PrismaClient } = require('@prisma/client'); // 导入 Prisma Client
 
 const prisma = new PrismaClient();
 
-function info(message) {
-    console.log('-----------------------------------');
+function infoBlock(message) {
+    console.log('\n-----------------------------------');
     console.log(message);
     console.log('-----------------------------------');
 }
@@ -63,6 +63,18 @@ async function deleteUser(id) {
     }
 }
 
+async function searchUserByEmail(email) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
+        console.log('Searched user:', user);
+        return user;
+    } catch (error) {
+        handleErrors(error);
+    }
+}
+
 async function createPost(data) {
     try {
         const newPost = await prisma.post.create({ data });
@@ -108,13 +120,25 @@ async function deletePost(id) {
     }
 }
 
+async function searchPostByTitle(title) {
+    try {
+        const posts = await prisma.post.findMany({
+            where: { title },
+        });
+        console.log('Searched posts:', posts);
+        return posts;
+    } catch (error) {
+        handleErrors(error);
+    }
+}
+
 async function main() {
-    let user1 = {
+    let user1_update_delete = {
         name: 'Kites',
         email: 'i@kites.cc',
     };
 
-    let user2 = {
+    let user2_search = {
         name: 'Kites2',
         email: 'i2@kites.cc',
     };
@@ -124,54 +148,59 @@ async function main() {
         email: 'i@kites.cc',
     };
 
-    const createdUser1 = await createUser(user1);
-    const createdUser2 = await createUser(user2);
+    infoBlock('Creating users');
+    const createdUser1 = await createUser(user1_update_delete);
+    const createdUser2 = await createUser(user2_search);
 
-    info('Creating users');
-
+    infoBlock('Creating duplicate user');
     await createUser(user1_duplicate);
 
-    info('Printing all users');
-
+    infoBlock('Printing all users');
     await printAllUsers();
 
+    infoBlock('Updating user');
     await updateUser(createdUser1.id, { name: 'Kites_Updated' });
 
+    infoBlock('Printing all users');
     await printAllUsers();
 
+    infoBlock('Searching user by email');
+    await searchUserByEmail(createdUser2.email);
+
+    infoBlock('Deleting user ', createdUser1.id);
     await deleteUser(createdUser1.id);
 
+    infoBlock('Printing all users');
     await printAllUsers();
 
-    let post1 = {
-        title: 'First Post',
+    let post1_user2 = {
+        title: 'A Post',
         authorId: createdUser2.id,
     };
 
-    let post2 = {
-        title: 'Second Post',
+    let post2_user2_search = {
+        title: 'A Post',
         authorId: createdUser2.id,
     };
-
-    const createdPost1 = await createPost(post1);
-    const createdPost2 = await createPost(post2);
 
     // 无效的帖子，authorId 不存在
     let postInvalid = {
         title: 'Invalid Post',
         authorId: 9999,
     };
+
+    infoBlock('Creating posts');
+    const createdPost1 = await createPost(post1_user2);
+    const createdPost2 = await createPost(post2_user2_search);
+
+    infoBlock('Creating invalid post');
     await createPost(postInvalid);
 
+    infoBlock('Printing all posts');
     await printAllPosts();
 
-    await updatePost(createdPost1.id, { title: 'First Post Updated' });
-
-    await printAllPosts();
-
-    await deletePost(createdPost1.id);
-
-    await printAllPosts();
+    infoBlock('Searching post by title');
+    await searchPostByTitle(createdPost2.title);
 }
 
 // 检查环境变量 NODE_ENV 是否为 development，如果是则执行 npx prisma migrate reset
