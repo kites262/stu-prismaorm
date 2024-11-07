@@ -2,7 +2,7 @@
 
 ## Development Environment
 
-```
+```bash
 npm init
 nvm use 18
 
@@ -12,9 +12,8 @@ npm install @prisma/client
 npx prisma init
 
 # Define models in schema.prisma, then
-
-npx prisma generate
-npx prisma migrate dev --name init
+npx prisma migrate dev --name init # Sync the database
+npx prisma generate # Generate the client
 
 node index.js
 ```
